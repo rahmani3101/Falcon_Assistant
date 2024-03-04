@@ -33,11 +33,12 @@ for role, text in st.session_state['chat_history']:
 input=st.text_input("YOU ",key="input")
 submit=st.button("SEND")
 
-if submit and input:
-    response=get_gemini_response(input)
-    
-    st.session_state['chat_history'].append(("You", input))
-    
-    for chunk in response:
-        st.write(chunk.text)
-        st.session_state['chat_history'].append(("FALCON ", chunk.text))
+if submit:
+    if input:
+        response = get_gemini_response(input)
+        st.session_state['chat_history'].append(("You", input))
+        for chunk in response:
+            st.write(chunk.text)
+            st.session_state['chat_history'].append(("FALCON ", chunk.text))
+    else:
+        st.error("You didn't write anything.")
